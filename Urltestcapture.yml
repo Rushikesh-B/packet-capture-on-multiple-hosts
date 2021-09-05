@@ -43,8 +43,8 @@
          method: GET
 #      register: _result
 #      until: _result.status == 200
-      retries: 5 # 720 * 5 seconds = 1hour (60*60/5)
-      delay: 1 # Every 5 seconds
+      retries: 5 
+      delay: 1 # Every 1 seconds
       register: _result
 #      when: command_output.start
       async: 20
