@@ -1,0 +1,68 @@
+# rbichewar
+# TCPDUMP capture parallel captures
+
+- hosts: linuxhost
+  remote_user: #username#
+  become: yes
+  become_method: sudo
+
+  vars:
+       cap_file: packet_capture_{{ ansible_hostname }}_{{ ansible_date_time['epoch'] }}.pcap
+
+  vars_prompt:
+    - name: host
+      prompt: please enter remote host IP
+      private: no
+
+    - name: url_name
+      prompt: please enter the url name
+      private: no
+
+    - name: dur_in_sec
+      prompt: Please specify the runtime duration in sec
+      private: no
+
+    - name: interface
+      prompt: Please specify the interface (e.g. eth0)
+      private: no
+
+    - name: dest_folder
+      prompt: Please specify the destination folder (location on remote server e.g. /var/tmp/)
+      private: no
+
+    - name: filter
+      prompt: Please specify the tcpdump filter (e.g. host 10.10.10.10). For no filter just press enter
+      default: ""
+      private: no
+
+  tasks:
+    - name: test
+      uri:
+         url: "https://{{ url_name }}"
+         follow_redirects: none
+         method: GET
+#      register: _result
+#      until: _result.status == 200
+      retries: 5 
+      delay: 1 # Every 1 seconds
+      register: _result
+#      when: command_output.start
+      async: 20
+      poll: 0 
+    - debug: 
+            var: _result
+
+    - name: start tcpdump
+      command: sudo /usr/sbin/tcpdump -G {{ dur_in_sec }} -W 1 -i {{ interface }} {{ filter }} -s 0 -vw/tmp/{{cap_file}}
+      register: command_output
+      async: 100
+      poll: 1
+
+    - debug:
+             var: command_output
+
+    - name: copy logs
+      fetch: src=/tmp/{{cap_file}} dest=/tmp/
+
+    - name: remove file
+      command: sudo rm -rf /tmp/{{cap_file}}
