@@ -1,5 +1,5 @@
 # rbichewar
-# TCPDUMP capture parallel from multiple hosts.
+# TCPDUMP capture parallel captures
 
 - hosts: linuxhost
   remote_user: rushu
@@ -54,7 +54,6 @@
 
     - name: start tcpdump
       command: sudo /usr/sbin/tcpdump -G {{ dur_in_sec }} -W 1 -i {{ interface }} {{ filter }} -s 0 -vw/tmp/{{cap_file}}
-#      when: retries.start
       register: command_output
       async: 100
       poll: 1
@@ -68,23 +67,3 @@
     - name: remove file
       command: sudo rm -rf /tmp/{{cap_file}}
 
-      #command: /usr/sbin/tcpdump -i {{ interface }} -s 0 -w /tmp/{{ cap_file }}
-      #async: 60
-      #poll: 0
-
-#    - pause: minutes=1 prompt="pause for 60 seconds or press Ctrl + c then c to continue"
-
-#    - name: kill tcpdump
-#      command: /usr/bin/pkill tcpdump
-
-#    - name: compress capture file
-#      command: sudo gzip {{cap_file}} chdir={{ dest_folder}}/
-
-    #- name: Change file permission
-    #  command: sudo chmod 755 {{ dest_folder}}/{{cap_file}}.gz
-
-#     - name: copy logs to /export/tmp/ansible/
-#       fetch: src=/tmp/{{cap_file}} dest=/tmp/
-
-    #- name: remove files from remote server
-    #  command: sudo rm -rf {{ dest_folder}}/{{cap_file}}.gz
