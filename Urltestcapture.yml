@@ -2,7 +2,7 @@
 # TCPDUMP capture parallel captures
 
 - hosts: linuxhost
-  remote_user: rushu
+  remote_user: #username#
   become: yes
   become_method: sudo
 
