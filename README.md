@@ -12,5 +12,9 @@ var prompt are used to collect the user input
 
 Url test : user will provide the url name and there are multiple url test are run after every 1 second delay
 
+we are running tcpdump command on multiple hosts , user provide which interface , IP and for how long the captures need to be collected
 
+Once captures complete . we are copying the file from ther remote server to local machine
+
+remove file from remote server
 
