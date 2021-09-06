@@ -19,7 +19,3 @@ Once captures complete . we are copying the file from ther remote server to loca
 remove file from remote server
 
 
-There are other tests we can add to peform 
-
-
-
