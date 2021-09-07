@@ -1,8 +1,8 @@
 # URL test on multiple server and parallel packet captures from multiple hosts
 
 This test is run on 2 different Linux servers
-Server 1 IP : 172.18.76.133
-Server 2 IP: 172.18.77.25
+Server 1 IP : 172.18.*.*
+Server 2 IP: 172.18.*.*
 
 First Part shows the hosts group information with remote username.
 
